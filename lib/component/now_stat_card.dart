@@ -27,6 +27,7 @@ class NowStatCard extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     scrollDirection: Axis.horizontal,
+                    physics: PageScrollPhysics(),
                     children: List.generate(
                       6, (index) => StatusCard(
                         title: '미세먼지',
