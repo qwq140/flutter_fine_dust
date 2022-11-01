@@ -4,7 +4,11 @@ import 'package:flutter_fine_dust/model/status_model.dart';
 
 class DataUtils {
   static convertDateTimeToString(DateTime dateTime){
-    return '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}';
+    return '${dateTime.year}-${getTimeFormat(dateTime.month)}-${getTimeFormat(dateTime.day)} ${getTimeFormat(dateTime.hour)}:${getTimeFormat(dateTime.minute)}';
+  }
+  
+  static String getTimeFormat(int number){
+    return number.toString().padLeft(2,'0');
   }
 
   static StatusModel getStatusFromItemCodeAndValue({required double value, required ItemCode itemCode}){
