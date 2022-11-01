@@ -27,10 +27,10 @@ class StatusCard extends StatelessWidget {
         children: [
           Text(title, style: ts,),
           const SizedBox(height: 8,),
-          SvgPicture.asset('assets/img/best.svg', width: 24, color: Colors.white,),
+          SvgPicture.asset(imgUrl, width: 24, color: Colors.white,),
           const SizedBox(height: 8,),
-          Text('좋음', style: ts,),
-          Text('29 ㎍/㎥', style: ts,),
+          Text(level, style: ts,),
+          Text(stat, style: ts,),
         ],
       ),
     )

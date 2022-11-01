@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fine_dust/component/card_title.dart';
 import 'package:flutter_fine_dust/component/status_card.dart';
+import 'package:flutter_fine_dust/const/item_code.dart';
+import 'package:flutter_fine_dust/model/stat_list_model.dart';
+import 'package:flutter_fine_dust/provider/region_stat_provider.dart';
+import 'package:flutter_fine_dust/utils/data_utils.dart';
+import 'package:provider/provider.dart';
 
 class NowStatCard extends StatelessWidget {
   const NowStatCard({Key? key}) : super(key: key);
@@ -8,6 +13,9 @@ class NowStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
+
+      List<StatListModel> stats = context.watch<RegionStatProvider>().state.stats;
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -28,15 +36,18 @@ class NowStatCard extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     physics: PageScrollPhysics(),
-                    children: List.generate(
-                      6, (index) => StatusCard(
-                        title: '미세먼지',
-                        imgUrl: 'assets/img/best.svg',
-                        level: '좋음',
-                        stat: '29 ㎍/㎥',
-                        width: constraint.maxWidth / 3,
-                      ),
-                    ),
+                    children: stats.map(
+                      (e) {
+                        final status = DataUtils.getStatusFromItemCodeAndValue(value: double.parse(e.stats.first.regionStat.first.value), itemCode: e.itemCode);
+                        return StatusCard(
+                          title: e.itemCode.kor,
+                          imgUrl: status.imgUrl,
+                          level: status.label,
+                          stat: '${e.stats.last.regionStat.first.value}${DataUtils.getUnitFromItemCode(itemCode: e.itemCode)}',
+                          width: constraint.maxWidth / 3,
+                        );
+                      },
+                    ).toList(),
                   ),
                 ),
               ],

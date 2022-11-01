@@ -1,4 +1,5 @@
 enum Region {
+  seoul('seoul', '서울'),
   chungnam('chungnam', '충남'),
   incheon('incheon', '인천'),
   daejeon('daejeon', '대전'),
@@ -9,7 +10,6 @@ enum Region {
   gangwon('gangwon', '강원'),
   ulsan('ulsan', '울산'),
   jeonnam('jeonnam', '전남'),
-  seoul('seoul', '서울'),
   busan('busan', '부산'),
   jeju('jeju', '제주'),
   chungbuk('chungbuk', '충북'),
