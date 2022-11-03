@@ -4,6 +4,7 @@ import 'package:flutter_fine_dust/model/stat_list_model.dart';
 import 'package:flutter_fine_dust/model/stat_model.dart';
 import 'package:flutter_fine_dust/model/status_model.dart';
 import 'package:flutter_fine_dust/provider/region_stat_provider.dart';
+import 'package:flutter_fine_dust/provider/theme_provider.dart';
 import 'package:flutter_fine_dust/utils/data_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class MainAppBar extends StatelessWidget {
 
     return SliverAppBar(
       expandedHeight: MediaQuery.of(context).size.width + 56,
-      backgroundColor: Colors.green,
+      backgroundColor: context.watch<ThemeProvider>().state.primaryColor,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,

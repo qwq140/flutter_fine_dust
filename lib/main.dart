@@ -4,6 +4,7 @@ import 'package:flutter_fine_dust/pages/home_page.dart';
 import 'package:flutter_fine_dust/provider/region_provider.dart';
 import 'package:flutter_fine_dust/provider/region_stat_provider.dart';
 import 'package:flutter_fine_dust/provider/stat_provider.dart';
+import 'package:flutter_fine_dust/provider/theme_provider.dart';
 import 'package:flutter_fine_dust/repository/stat_repository.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         ProxyProvider2<StatProvider, RegionProvider, RegionStatProvider>(
             update: (context, statProvider, regionProvider, previous) => RegionStatProvider(regionProvider: regionProvider, statProvider: statProvider),
         ),
+        ProxyProvider<RegionStatProvider, ThemeProvider>(update: (context, regionStatProvider, previous) => ThemeProvider(regionStatProvider: regionStatProvider),),
       ],
       child: MaterialApp(
         home: HomePage(),

@@ -11,6 +11,7 @@ import 'package:flutter_fine_dust/model/stat_model.dart';
 import 'package:flutter_fine_dust/provider/region_provider.dart';
 import 'package:flutter_fine_dust/provider/stat_provider.dart';
 import 'package:flutter_fine_dust/provider/stat_state.dart';
+import 'package:flutter_fine_dust/provider/theme_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +28,9 @@ class HomePage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: context.watch<ThemeProvider>().state.primaryColor,
       drawer: Drawer(
-        backgroundColor: Colors.green,
+        backgroundColor: context.watch<ThemeProvider>().state.primaryColor,
         child: ListView(
           children: [
             DrawerHeader(
@@ -40,9 +41,12 @@ class HomePage extends StatelessWidget {
                 title: Text(e.kor),
                 tileColor: Colors.white,
                 selectedColor: Colors.black,
-                selectedTileColor: Colors.lightGreen,
+                selectedTileColor: context.watch<ThemeProvider>().state.subColor,
                 selected: context.watch<RegionProvider>().state.region == e,
-                onTap: () => context.read<RegionProvider>().changeRegion(region: e),
+                onTap: () {
+                  context.read<RegionProvider>().changeRegion(region: e);
+                  Navigator.of(context).pop();
+                },
               ),
             ).toList(),
           ],
@@ -55,7 +59,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 MainCard(
-                  backgroundColor: Colors.lightGreen,
+                  backgroundColor: context.watch<ThemeProvider>().state.subColor,
                   child: NowStatCard(),
                 ),
                 const SizedBox(
@@ -65,8 +69,8 @@ class HomePage extends StatelessWidget {
                   (e) => Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: MainCard(
-                      backgroundColor: Colors.lightGreen,
-                      child: HourlyStatCard(category: e.name),
+                      backgroundColor: context.watch<ThemeProvider>().state.subColor,
+                      child: HourlyStatCard(itemCode: e),
                     ),
                   ),
                 ),

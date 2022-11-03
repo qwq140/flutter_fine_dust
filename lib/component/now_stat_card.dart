@@ -43,7 +43,7 @@ class NowStatCard extends StatelessWidget {
                           title: e.itemCode.kor,
                           imgUrl: status.imgUrl,
                           level: status.label,
-                          stat: '${e.stats.last.regionStat.first.value}${DataUtils.getUnitFromItemCode(itemCode: e.itemCode)}',
+                          stat: '${e.stats.first.regionStat.first.value}${DataUtils.getUnitFromItemCode(itemCode: e.itemCode)}',
                           width: constraint.maxWidth / 3,
                         );
                       },
