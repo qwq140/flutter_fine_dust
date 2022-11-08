@@ -2,6 +2,8 @@ import 'package:flutter_fine_dust/const/item_code.dart';
 import 'package:flutter_fine_dust/const/regions.dart';
 import 'package:flutter_fine_dust/model/region_stat_model.dart';
 
+// 시간별 오염도 수치
+// List<RegionStatModel> : 지역별 오염도 수치
 class StatModel {
   late final List<RegionStatModel> regionStat;
   late final DateTime dataTime;

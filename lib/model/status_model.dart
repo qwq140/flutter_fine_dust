@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// 좋음, 보통, 나쁨, 매우 나쁨 4가지
 class StatusModel {
   // 단계
   final int level;

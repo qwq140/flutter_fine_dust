@@ -15,8 +15,33 @@ import 'package:flutter_fine_dust/provider/theme_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  bool isExpanded = true;
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(scrollListener);
+  }
+
+  scrollListener(){
+    bool isExpanded = scrollController.offset < (MediaQuery.of(context).size.width + 56) - kToolbarHeight;
+    if(isExpanded != this.isExpanded) {
+      setState(() {
+        this.isExpanded = isExpanded;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,32 +77,40 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          MainAppBar(),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                MainCard(
-                  backgroundColor: context.watch<ThemeProvider>().state.subColor,
-                  child: NowStatCard(),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                ...ItemCode.values.map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: MainCard(
-                      backgroundColor: context.watch<ThemeProvider>().state.subColor,
-                      child: HourlyStatCard(itemCode: e),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await context.read<StatProvider>().fetch();
+        },
+        child: CustomScrollView(
+          controller: scrollController,
+          slivers: [
+            MainAppBar(
+              isExpanded: isExpanded,
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  MainCard(
+                    backgroundColor: context.watch<ThemeProvider>().state.subColor,
+                    child: const NowStatCard(),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  ...ItemCode.values.map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: MainCard(
+                        backgroundColor: context.watch<ThemeProvider>().state.subColor,
+                        child: HourlyStatCard(itemCode: e),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

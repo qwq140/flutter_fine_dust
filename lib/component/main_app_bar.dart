@@ -11,7 +11,9 @@ import 'package:provider/provider.dart';
 
 class MainAppBar extends StatelessWidget {
 
-  const MainAppBar({Key? key}) : super(key: key);
+  final bool isExpanded;
+
+  const MainAppBar({Key? key, required this.isExpanded}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,8 @@ class MainAppBar extends StatelessWidget {
       expandedHeight: MediaQuery.of(context).size.width + 56,
       backgroundColor: context.watch<ThemeProvider>().state.primaryColor,
       pinned: true,
+      centerTitle: true,
+      title: isExpanded ? null : Text('${stat.regionStat.first.region.kor} ${DataUtils.convertDateTimeToString(stat.dataTime)}'),
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         background: SafeArea(
